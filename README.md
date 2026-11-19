@@ -29,7 +29,18 @@ Ami benne van:
 - **Tagok:** taglista és adatlap fizetési tervvel; a havi esedékességek automatikusan létrejönnek
   (a belépés hónapjától); befizetés rögzítése telefonról (összeg, mód: készpénz/átutalás, dátum);
   elengedés; átutalási közlemény javaslat. Csak nyilvántartás – nincs kártya, nincs bankkapcsolat.
-- **Előadások:** lista és adatlap jegytípusokkal, kézzel rögzített eladások és bevétel.
+- **Előadások és jegyek:** az admin **nem árul jegyet** (a saját webshop SimplePay-jel marad), hanem a máshol
+  történt eladásokat gyűjti egy helyre:
+  - **jegytípus-sablonok** (név, alapár, jogosultsági feltétel, „belépéskor ellenőrizendő”, ajándékjegy) – szabad
+    lista, nem fix hármas; új előadásnál átmásolódnak, és előadásonként átírhatók (0 Ft-os és ajándékjegy is lehet);
+  - az időpont, az **állapot** (elérhető / teltház / utolsó előadás / lezárt) és a **kapacitás** külön mező, nem a
+    címben; az adatlapon foglaltság látszik, a lezajlott előadás automatikusan „lezárt”, a betelt „teltház”;
+  - **eladás rögzítése** kézzel vagy **CSV-importtal** (webshop-export, partnerlista): csatorna (saját webshop /
+    partner / helyszíni / meghívó), darab, és a sorba mentett **egységár** – így a későbbi árváltozás nem írja át a
+    múltat; az azonos rendelésszámú sort újraimportnál kihagyja;
+  - nyomtatható, telefonon is pipálható **belépési lista** (név, jegytípus, darab, „ellenőrizendő” jelzés);
+  - a vevők kérésre a **kontakt-mesterlistába** kerülnek a meglévő összefésülésen át (bizonytalan egyezés → Ellenőrzés);
+    a hírlevél-hozzájárulás külön jelölő, alapból **nem**.
 - **Kontaktok – mesterlista:** CSV feltöltése → oszlopok párosítása (a rendszer megjegyzi) →
   egységesítés (e-mail kisbetű, telefon +36 alak, nevek) → szabályalapú címkejavaslat
   (sajtó / partner / támogató / tag / néző) → összefésülés: azonos e-mail vagy telefon esetén
@@ -38,7 +49,7 @@ Ami benne van:
   A nyers sor mindig megmarad, így visszakereshető, honnan jött egy adat.
 - **Beállítások:** díjtételek, **teljes mentés letöltése** (ZIP, benne minden tábla CSV-ben).
 
-Ami szándékosan kimaradt: kártyás fizetés, tagi önkiszolgáló belépés, hírlevélküldés, banki kivonat
+Ami szándékosan kimaradt: jegyárusítás és kártyás fizetés, a webshop közvetlen bekötése, tagi önkiszolgáló belépés, hírlevélküldés, banki kivonat
 importja, éles telepítés.
 
 ## Futtatás helyben
@@ -55,13 +66,18 @@ Telefonról ugyanazon a hálózaton: `npx wrangler dev --local --ip 0.0.0.0`, ma
 
 Hasznos parancsok:
 
-- `npm test` – tesztek (egységesítés, összefésülés, esedékesség-generálás, CSV, mentés).
+- `npm test` – tesztek (egységesítés, összefésülés, esedékesség-generálás, CSV, mentés, jegyek: egységár, foglaltság, állapot, import, belépési lista).
 - `npm run db:reset` – a helyi adatbázis törlése és újratöltése a mintaadatokkal.
 
 **Bemutató a kontakt-mesterlistára:** a „Lista feltöltése” oldalon töltsd fel egymás után a
 [`mintaadatok/`](mintaadatok) mappa kitalált listáit (`sajtolista_regi.csv` – régi, Windows-1250
 kódolású export; `partnerek_2023.csv`; `hirlevel_export.csv`; `tagok.csv`). Szándékosan vannak
 bennük duplikátumok, ékezet- és formátumeltérések, elírások. Excel-fájlt előbb CSV-be kell menteni.
+
+**Bemutató a jegyekre:** nyisd meg a „Hajnali vendégek” december 6-i előadását, és az „Import CSV-ből” résznél töltsd
+fel a [`mintaadatok/jegyeladas_webshop.csv`](mintaadatok/jegyeladas_webshop.csv) kitalált webshop-exportot a
+„Vevők felvétele a kontakt-mesterlistába” jelölővel. Egy sor szándékosan hibás (ismeretlen jegytípus), két sor egy
+meglévő kontakthoz kapcsolódik. Utána nézd meg a belépési listát; a „Mese a hetedik szobáról” előadás betelt.
 
 **Belépés:** helyben nincs belépés („helyi admin”). Élesben a felület elé Cloudflare Access kerülne
 (e-mailes egyszer használatos kód, csak engedélyezett címek) – lásd `src/auth.js`.
@@ -71,11 +87,11 @@ bennük duplikátumok, ékezet- és formátumeltérések, elírások. Excel-fáj
 | Hely | Mi van benne |
 |---|---|
 | `src/index.js` | útválasztó, napi ütemezett esedékesség-generálás |
-| `src/routes/` | képernyők (kezdőlap, tagok, előadások, kontaktok, feltöltés, beállítások) |
-| `src/lib/` | tiszta logika: egységesítés, összefésülés, címkejavaslat, díjszámítás, CSV, ZIP |
-| `src/services/` | adatbázis-műveletek (feltöltés feldolgozása, esedékességek) |
+| `src/routes/` | képernyők (kezdőlap, tagok, előadások és jegyek, jegytípus-sablonok, kontaktok, feltöltés, beállítások) |
+| `src/lib/` | tiszta logika: egységesítés, összefésülés, címkejavaslat, díjszámítás, jegyszabályok, CSV, ZIP |
+| `src/services/` | adatbázis-műveletek (feltöltés feldolgozása, esedékességek, jegyeladások) |
 | `migrations/` | adatbázis-séma |
-| `seed/seed.sql` | kitalált minta tagok, díjtételek, előadások |
+| `seed/seed.sql` | kitalált minta tagok, díjtételek, jegytípus-sablonok, előadások, eladások |
 | `tests/` | `node --test` tesztek |
 
 A megoldási terv részletei (adatmodell, adatvédelem, későbbi szakaszok) a hackathon-előkészítő

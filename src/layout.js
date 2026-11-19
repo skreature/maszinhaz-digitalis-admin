@@ -53,6 +53,15 @@ button,.btn{font:inherit;display:inline-block;padding:.6rem 1rem;border-radius:8
 .pair dt{color:var(--muted);font-size:.85rem}.pair dd{margin:0;overflow-wrap:anywhere}
 .diff{background:#fff5d6}
 .search{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}.search input{flex:1 1 200px;width:auto}.search select{width:auto}
+.badge{display:inline-block;border-radius:999px;padding:.05rem .6rem;font-size:.8rem;font-weight:600;vertical-align:middle;background:#e8f4ec;color:var(--ok)}
+.badge.st-teltház{background:#fbeaec;color:var(--bad)}.badge.st-utolsó-előadás{background:#fff1d6;color:var(--warn)}.badge.st-lezárt{background:#ece9e4;color:var(--muted)}
+.meter{height:.6rem;background:var(--line);border-radius:999px;overflow:hidden;margin:.4rem 0}.meter span{display:block;height:100%;background:var(--accent)}
+details>summary{list-style:none}details>summary::-webkit-details-marker{display:none}
+table.entry td{vertical-align:middle}table.entry tr.in td{background:#f1f8f3}
+button.tick{background:#fff;color:var(--ink);border:1px solid #c9c2b8;font-size:1.4rem;line-height:1;padding:.3rem .55rem;min-height:44px;min-width:44px}
+@media print{header,.noprint,.flash,button.tick{display:none}main{max-width:none;padding:0}body{background:#fff;font-size:12pt}
+  table.entry td:first-child::before{content:"☐";font-size:14pt}table.entry tr.in td:first-child::before{content:"☑"}
+  table.entry th,table.entry td{border-bottom:1px solid #999;padding:.3rem .4rem}.table-wrap{overflow:visible}}
 @media (max-width:640px){
   main{padding:.75rem}
   header nav a{padding:.4rem .5rem;font-size:.9rem}
