@@ -25,11 +25,11 @@ async function homePage(ctx) {
   return ctx.page("Kezdőlap", html`
 <h1>Kezdőlap</h1>
 <div class="grid">
-  <div class="card"><div class="muted">Tartozó tagok (${periodLabel(period)})</div><div class="big">${owing.length} fő</div><div class="muted">összesen ${money(total)}</div></div>
-  <div class="card"><div class="muted">Ellenőrzésre váró kontakt-egyezések</div><div class="big">${reviews}</div>
+  <div class="card brand"><div class="muted">Tartozó tagok (${periodLabel(period)})</div><div class="big">${owing.length} fő</div><div class="muted">összesen ${money(total)}</div></div>
+  <div class="card brand"><div class="muted">Ellenőrzésre váró kontakt-egyezések</div><div class="big">${reviews}</div>
     ${reviews ? html`<a class="btn small" href="/ellenorzes">Ellenőrzés</a>` : html`<span class="muted">Nincs teendő.</span>`}</div>
   <div class="card"><div class="muted">Gyors műveletek</div>
-    <div class="actions" style="margin-top:.5rem"><a class="btn" href="/befizetes">Befizetés rögzítése</a><a class="btn secondary" href="/feltoltes">Lista feltöltése</a></div></div>
+    <div class="actions" style="margin-top:.5rem"><a class="btn accent" href="/befizetes">Befizetés rögzítése</a><a class="btn secondary" href="/feltoltes">Lista feltöltése</a></div></div>
 </div>
 
 <h2>Ki tartozik?</h2>

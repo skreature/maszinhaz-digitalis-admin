@@ -121,13 +121,13 @@ async function show(ctx) {
 <p class="muted">${when(p.starts_at)} · ${p.venue} ${p.note ? html`· ${p.note}` : ""}
 ${st !== p.status ? html`<br>Rögzített állapot: ${p.status}; a kijelzett állapot ${String(p.starts_at).slice(0, 10) < ctx.today ? "azért lezárt, mert az előadás lezajlott" : "azért teltház, mert betelt a kapacitás"}.` : ""}</p>
 <div class="grid">
-  <div class="card"><div class="muted">Foglaltság</div><div class="big">${occLabel(occ)}</div>
+  <div class="card brand"><div class="muted">Foglaltság</div><div class="big">${occLabel(occ)}</div>
     ${occ.capacity === null ? html`<div class="muted">Nincs megadva kapacitás.</div>`
       : html`<div class="meter"><span style="width:${Math.min(100, occ.percent)}%"></span></div><div class="muted">${occ.free >= 0 ? `${occ.free} szabad hely` : `${-occ.free} fővel túlfoglalva`}</div>`}</div>
-  <div class="card"><div class="muted">Eladott jegy / bevétel</div><div class="big">${sold} db · ${money(revenue)}</div>
+  <div class="card brand"><div class="muted">Eladott jegy / bevétel</div><div class="big">${sold} db · ${money(revenue)}</div>
     <div class="muted">${byChannel.map((x) => `${x.c}: ${x.qty} db, ${money(x.amount)}`).join(" · ") || "Még nincs eladás."}</div></div>
   <div class="card"><div class="muted">Belépés</div>
-    <div class="actions" style="margin-top:.5rem"><a class="btn" href="/eloadasok/${p.id}/belepes">Belépési lista</a></div></div>
+    <div class="actions" style="margin-top:.5rem"><a class="btn accent" href="/eloadasok/${p.id}/belepes">Belépési lista</a></div></div>
 </div>
 
 <h2>Jegytípusok ennél az előadásnál</h2>

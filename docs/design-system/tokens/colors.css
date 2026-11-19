@@ -1,0 +1,20 @@
+/* Brand palette sampled from mas-zinhaz.hu (screenshots, 2026-11-19). Admin semantics layered on top. */
+:root{
+/* brand */
+--msz-purple:#8e2680;--msz-purple-dark:#741f69;--msz-purple-tint:#f9f5f8;--msz-purple-soft:#efe1ec;
+--msz-orange:#f29321;--msz-orange-dark:#d97c0c;--msz-orange-tint:#fdeedd;
+--msz-navy:#272b5b;--msz-red:#d40f2f;--msz-yellow:#ffdd00;
+/* neutrals */
+--msz-bg:#f5f5f5;--msz-card:#fff;--msz-ink:#272b5b;--msz-muted:#6c6f8a;--msz-line:#dee2e6;--msz-input-line:#dee2e6;
+/* roles (names kept from the repo's layout.js) */
+--msz-accent:var(--msz-purple);--msz-accent-ink:#fff;--msz-accent-tint:var(--msz-purple-soft);
+--msz-ok:#1d6b3a;--msz-ok-bg:#e8f4ec;--msz-ok-line:#b9dcc6;
+--msz-warn:#a85f05;--msz-warn-bg:#fdeedd;
+--msz-bad:#c40e2b;--msz-bad-bg:#fbe7ea;--msz-bad-line:#f2b8c1;
+--msz-closed-bg:#ececef;--msz-diff:#fff6bf;--msz-checked-in:#eef7f1;
+/* semantic aliases */
+--surface-page:var(--msz-bg);--surface-card:var(--msz-card);--surface-card-brand:var(--msz-purple-tint);--surface-header:#fff;--surface-footer:var(--msz-purple);
+--text-body:var(--msz-ink);--text-muted:var(--msz-muted);--text-heading:var(--msz-purple);--text-on-accent:#fff;--text-link:var(--msz-purple);--text-link-hover:var(--msz-orange-dark);
+--border-default:var(--msz-line);--border-input:var(--msz-input-line);--border-brand:var(--msz-purple);
+--status-ok:var(--msz-ok);--status-warn:var(--msz-warn);--status-bad:var(--msz-bad);
+}

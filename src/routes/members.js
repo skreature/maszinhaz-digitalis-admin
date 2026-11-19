@@ -108,11 +108,11 @@ async function show(ctx) {
 
   return ctx.page(m.name, html`<h1>${m.name} <span class="muted">${m.member_code}</span></h1>
 <div class="grid">
-  <div class="card">
+  <div class="card brand">
     <div class="muted">${balance > 0 ? "Tartozás" : balance < 0 ? "Előre befizetve" : "Egyenleg"}</div>
     <div class="big ${balance > 0 ? "status-nyitott" : "status-fizetve"}">${money(Math.abs(balance))}</div>
     <p class="muted">Átutalási közlemény: <strong>${transferReference(m.member_code, period)}</strong></p>
-    <a class="btn" href="/befizetes?tag=${m.id}">Befizetés rögzítése</a>
+    <a class="btn accent" href="/befizetes?tag=${m.id}">Befizetés rögzítése</a>
   </div>
   <div class="card">
     <p><a href="/kontaktok/${m.contact_id}">Kontakt adatlap</a><br>${m.email}<br>${formatPhone(m.phone)}</p>

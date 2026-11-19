@@ -71,11 +71,11 @@ async function show(ctx) {
   const count = (st) => recs.filter((r) => r.status === st).length;
   return ctx.page(u.filename, html`<h1>Feltöltés: ${u.filename}</h1>
 <div class="grid">
-  <div class="card"><div class="muted">Új kontakt</div><div class="big">${count("új")}</div></div>
-  <div class="card"><div class="muted">Biztos egyezés, összevonva</div><div class="big">${count("összevonva")}</div></div>
-  <div class="card"><div class="muted">Ellenőrzésre vár</div><div class="big">${count("ellenőrzésre vár")}</div>
+  <div class="card brand"><div class="muted">Új kontakt</div><div class="big">${count("új")}</div></div>
+  <div class="card brand"><div class="muted">Biztos egyezés, összevonva</div><div class="big">${count("összevonva")}</div></div>
+  <div class="card brand"><div class="muted">Ellenőrzésre vár</div><div class="big">${count("ellenőrzésre vár")}</div>
     ${count("ellenőrzésre vár") ? html`<a class="btn small" href="/ellenorzes">Ellenőrzés</a>` : ""}</div>
-  <div class="card"><div class="muted">Kihagyva / üres sor</div><div class="big">${count("kihagyva") + count("üres")}</div></div>
+  <div class="card brand"><div class="muted">Kihagyva / üres sor</div><div class="big">${count("kihagyva") + count("üres")}</div></div>
 </div>
 <h2>Sorok</h2>
 <div class="table-wrap"><table class="cards">
@@ -137,7 +137,7 @@ async function reviewPage(ctx) {
   <div class="card"><h2 style="margin-top:0">Meglévő kontakt <a class="muted" href="/kontaktok/${item.cid}">#${item.cid}</a></h2><dl>${side("c")}</dl></div>
 </div>
 <form method="post" action="/ellenorzes/${item.id}" class="actions">
-  <button name="dontes" value="ugyanaz">Ugyanaz az ember</button>
+  <button name="dontes" value="ugyanaz" class="accent">Ugyanaz az ember</button>
   <button name="dontes" value="külön" class="secondary">Két külön ember</button>
   <button name="dontes" value="kihagy" class="secondary">Kihagyom</button>
 </form>
