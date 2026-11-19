@@ -1,6 +1,13 @@
 import { html, money } from "../lib/html.js";
 import { periodLabel, periodOf } from "../lib/dates.js";
 import { debtors, ensureCharges } from "../services/members.js";
+import { effectiveStatus, occupancy } from "../lib/tickets.js";
+
+function seatLabel(p, today) {
+  const occ = occupancy(p.capacity, [], [{ ticket_type_id: 0, quantity: p.seats }]);
+  const st = effectiveStatus(p, occ, today);
+  return `${occ.capacity === null ? `${occ.seats} fő` : `${occ.seats} / ${occ.capacity} fő`} · ${st}`;
+}
 
 async function homePage(ctx) {
   const period = periodOf(ctx.today);
@@ -8,7 +15,10 @@ async function homePage(ctx) {
   const owing = await debtors(ctx.db, ctx.today);
   const reviews = await ctx.db.prepare("SELECT COUNT(*) AS n FROM review_item WHERE status = 'nyitott'").first("n");
   const { results: upcoming } = await ctx.db.prepare(
-    "SELECT id, title, starts_at, venue FROM performance WHERE starts_at >= ? ORDER BY starts_at LIMIT 5",
+    `SELECT p.id, p.title, p.starts_at, p.venue, p.status, p.capacity,
+       (SELECT COALESCE(SUM(s.quantity), 0) FROM ticket_sale s JOIN ticket_type t ON t.id = s.ticket_type_id
+        WHERE t.performance_id = p.id AND t.is_gift = 0) AS seats
+     FROM performance p WHERE p.starts_at >= ? ORDER BY p.starts_at LIMIT 5`,
   ).bind(ctx.today).all();
   const total = owing.reduce((s, d) => s + d.owed, 0);
 
@@ -36,7 +46,8 @@ ${owing.length ? html`<div class="table-wrap"><table class="cards">
 <h2>Következő előadások</h2>
 ${upcoming.length ? html`<div class="table-wrap"><table class="cards"><tbody>${upcoming.map((p) => html`<tr>
   <td data-l="Időpont">${p.starts_at.replace("T", " ")}</td>
-  <td data-l="Cím"><a href="/eloadasok/${p.id}">${p.title}</a></td><td data-l="Helyszín">${p.venue}</td></tr>`)}
+  <td data-l="Cím"><a href="/eloadasok/${p.id}">${p.title}</a></td><td data-l="Helyszín">${p.venue}</td>
+  <td data-l="Foglaltság">${seatLabel(p, ctx.today)}</td></tr>`)}
 </tbody></table></div>` : html`<p class="muted">Nincs rögzített közelgő előadás.</p>`}
 `);
 }

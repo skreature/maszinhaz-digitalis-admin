@@ -4,7 +4,7 @@ import { makeZip } from "../lib/zip.js";
 
 // A teljes mentésbe kerülő táblák (minden adat, szabványos CSV-ben – terv 2.4).
 const BACKUP_TABLES = ["contact", "contact_identifier", "upload", "source_record", "mapping_memory", "review_item",
-  "match_decision", "fee_plan", "member", "charge", "payment", "performance", "ticket_type", "ticket_sale"];
+  "match_decision", "fee_plan", "member", "charge", "payment", "performance", "ticket_template", "ticket_type", "ticket_sale"];
 
 async function page(ctx) {
   const { results: plans } = await ctx.db.prepare(

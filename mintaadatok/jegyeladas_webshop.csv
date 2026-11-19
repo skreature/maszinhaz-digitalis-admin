@@ -1,0 +1,7 @@
+Rendelésszám;Dátum;Jegytípus;Darab;Egységár;Név;E-mail;Telefon;Hírlevél
+W-2001;2026.11.18.;Normál;2;6 500 Ft;Kovács Anna;anna.kovacs@example.org;;igen
+W-2002;2026.11.18.;Kedvezményes;1;5000;Gulyás Ferenc;gulyas.ferenc@example.net;06 30 000 0301;
+W-2003;2026.11.19.;Támogatói;1;10000;Szentesi Dóra;szentesi.dora@example.net;;nem
+W-2004;2026.11.19.;Normál;3;;Kovacs Anna;;+36 30 000 0101;
+W-2005;2026.11.19.;Pedagógus – ingyenes;2;0;Kiss Botond;kiss.botond@example.net;;
+W-2006;2026.11.19.;Diák;1;3000;Próba Pál;proba.pal@example.net;;

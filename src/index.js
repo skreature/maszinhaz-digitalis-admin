@@ -9,10 +9,11 @@ import * as uploads from "./routes/uploads.js";
 import * as members from "./routes/members.js";
 import * as performances from "./routes/performances.js";
 import * as settings from "./routes/settings.js";
+import * as templates from "./routes/templates.js";
 
 const ROUTES = [
   ...home.routes, ...contacts.routes, ...uploads.routes,
-  ...members.routes, ...performances.routes, ...settings.routes,
+  ...members.routes, ...performances.routes, ...templates.routes, ...settings.routes,
 ].map(([method, pattern, handler]) => {
   const keys = [];
   const re = new RegExp("^" + pattern.replace(/:(\w+)/g, (_, k) => { keys.push(k); return "([^/]+)"; }) + "/?$");
