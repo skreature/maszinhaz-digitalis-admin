@@ -1,0 +1,18 @@
+{
+  "name": "maszinhaz-admin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MáSzínház egykapus admin felület (MVP) – Cloudflare Workers + D1",
+  "scripts": {
+    "dev": "wrangler dev --local",
+    "db:migrate": "wrangler d1 migrations apply maszinhaz --local",
+    "db:seed": "wrangler d1 execute maszinhaz --local --file seed/seed.sql",
+    "db:reset": "node scripts/reset-local.mjs && npm run db:migrate && npm run db:seed",
+    "setup": "npm run db:migrate && npm run db:seed",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "wrangler": "4.155.0"
+  }
+}

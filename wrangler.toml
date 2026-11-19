@@ -1,0 +1,16 @@
+# MáSzínház admin – helyi futtatáshoz.
+# Telepítés (deploy) NEM része az MVP-nek. Éles üzemben a D1 adatbázist
+# `--jurisdiction eu` kapcsolóval kell létrehozni, és a valódi database_id-t ide írni.
+name = "maszinhaz-admin"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "maszinhaz"
+database_id = "00000000-0000-0000-0000-000000000000" # helyi fejlesztéshez elég egy helykitöltő
+migrations_dir = "migrations"
+
+# Havi esedékesség-generálás (élesben ez futna naponta egyszer; helyben a kezdőlap is lefuttatja).
+[triggers]
+crons = ["0 3 * * *"]
